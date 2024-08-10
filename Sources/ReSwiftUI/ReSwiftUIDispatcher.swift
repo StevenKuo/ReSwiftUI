@@ -35,6 +35,7 @@ public final class ReSwiftUIDispatcher {
             newState.forEach { (key: String, value: Any) in
                 selector[key] = value
             }
+            selector.raw.printSelectorState(name: name)
         }
     }
 }
