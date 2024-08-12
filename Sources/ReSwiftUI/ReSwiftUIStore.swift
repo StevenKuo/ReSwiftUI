@@ -14,10 +14,6 @@ public struct ReSwiftUIAction<T: RawRepresentable> where T.RawValue == String {
     public let payload: [String: Any]
 }
 
-public struct ReSwiftUIUndefinedState {
-    public init() {}
-}
-
 public protocol ReSwiftUIReducer<T>  {
     associatedtype T
     var name: String { get }

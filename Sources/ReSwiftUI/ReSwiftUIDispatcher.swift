@@ -22,6 +22,7 @@ public final class ReSwiftUIDispatcher {
             partialResult[reducer.name] = reducer
         })
         return self.reducers.reduce(into: [:], { partialResult, reducer in
+            reducer.value.initState.printSelectorState(subline: "Init", name: reducer.key)
             partialResult[reducer.key] = ReSwiftUISelector(state: reducer.value.initState)
         })
     }
@@ -35,7 +36,7 @@ public final class ReSwiftUIDispatcher {
             newState.forEach { (key: String, value: Any) in
                 selector[key] = value
             }
-            selector.raw.printSelectorState(name: name)
+            selector.raw.printSelectorState(subline: "Diff", name: name)
         }
     }
 }
