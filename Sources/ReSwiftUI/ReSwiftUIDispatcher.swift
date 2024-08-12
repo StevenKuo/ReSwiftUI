@@ -28,6 +28,7 @@ public final class ReSwiftUIDispatcher {
     }
     
     func dispatchToReducer<T: RawRepresentable>(action: ReSwiftUIAction<T>, retrieveState: @escaping (String) -> ReSwiftUISelector?) {
+        action.payload.printSelectorState(subline: "Action", name: "Payload")
         reducers.forEach { (name: String, reducer: any ReSwiftUIReducer) in
             guard let selector = retrieveState(name) else {
                 return
