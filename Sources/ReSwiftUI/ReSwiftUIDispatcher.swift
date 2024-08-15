@@ -8,7 +8,7 @@
 import Foundation
 
 @available(iOS 17.0, *)
-public final class ReSwiftUIDispatcher {
+public final actor ReSwiftUIDispatcher {
     private var reducers = [String: any ReSwiftUIReducer]()
     
     public static func createAction<T>(_ actionType: T) -> (_ payload: [String: Any]) -> ReSwiftUIAction<T> where T: RawRepresentable, T.RawValue == String {

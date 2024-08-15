@@ -30,7 +30,9 @@ public final class ReSwiftUIStore {
     private let dispatcher = ReSwiftUIDispatcher()
     
     public func configureStore(reducers: [any ReSwiftUIReducer]) {
-        self.selectors = dispatcher.combineReducers(reducers: reducers)
+        Task {
+            await self.selectors = dispatcher.combineReducers(reducers: reducers)
+        }
     }
     
     public func getState(name: String, key: String) -> Any? {
@@ -49,8 +51,10 @@ public final class ReSwiftUIStore {
     
     
     public func dispatch<T: RawRepresentable>(action: ReSwiftUIAction<T>) {
-        dispatcher.dispatchToReducer(action: action) { [unowned self] name in
-            return self.selectors[name]
+        Task {
+            await dispatcher.dispatchToReducer(action: action) { [unowned self] name in
+                return self.selectors[name]
+            }
         }
     }
     
