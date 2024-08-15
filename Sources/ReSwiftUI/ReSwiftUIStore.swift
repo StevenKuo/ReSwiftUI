@@ -50,15 +50,9 @@ public final class ReSwiftUIStore {
     }
     
     
-    public func dispatch<T: RawRepresentable>(action: ReSwiftUIAction<T>) {
-        Task {
-            await dispatcher.dispatchToReducer(action: action) { [unowned self] name in
-                return self.selectors[name]
-            }
+    public func dispatch<T: RawRepresentable>(action: ReSwiftUIAction<T>) async {
+        await dispatcher.dispatchToReducer(action: action) { [unowned self] name in
+            return self.selectors[name]
         }
-    }
-    
-    public func asyncDispatch<T: RawRepresentable>(_ action: (_ dispatch: Dispatch<T>) async -> Void) async {
-        await action(dispatch)
     }
 }
