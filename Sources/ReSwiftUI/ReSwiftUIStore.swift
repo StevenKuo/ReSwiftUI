@@ -26,10 +26,19 @@ public final class ReSwiftUIStore {
     public typealias Dispatch<T: RawRepresentable> = (ReSwiftUIAction<T>) -> Void where T.RawValue == String
     public static let shared = ReSwiftUIStore()
     
+    private var configuration = Configuration(LogEnabled: false)
+    
+    var isLogEnabled: Bool {
+        return configuration.LogEnabled
+    }
+    
     private var selectors = [String: ReSwiftUISelector]()
     private let dispatcher = ReSwiftUIDispatcher()
     
-    public func configureStore(reducers: [any ReSwiftUIReducer]) {
+    public func configureStore(reducers: [any ReSwiftUIReducer], configuration: Configuration? = nil) {
+        if let configuration = configuration {
+            self.configuration = configuration
+        }
         Task {
             await self.selectors = dispatcher.combineReducers(reducers: reducers)
         }

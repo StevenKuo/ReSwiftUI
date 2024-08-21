@@ -7,9 +7,13 @@
 
 import Foundation
 
+@available(iOS 17.0, *)
 extension Dictionary {
     
     func printSelectorState(subline: String, name: String) {
+        if !ReSwiftUIStore.shared.isLogEnabled {
+            return
+        }
         let preprocess = self.reduce(into: [:]) { partialResult, original in
             if original is Encodable {
                 partialResult[original.key] = original.value
